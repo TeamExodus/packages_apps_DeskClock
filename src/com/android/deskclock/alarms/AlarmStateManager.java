@@ -27,6 +27,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.PowerManager;
+import android.os.SystemProperties;
 
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -47,9 +48,6 @@ import com.android.deskclock.events.Events;
 import com.android.deskclock.provider.Alarm;
 import com.android.deskclock.provider.AlarmInstance;
 import com.android.deskclock.settings.SettingsActivity;
-
-import org.codeaurora.wrapper.deskclock.AlarmManager_Wrapper;
-import org.codeaurora.wrapper.deskclock.SystemProperties_Wrapper;
 
 import java.util.Calendar;
 import java.util.HashSet;
@@ -1093,7 +1091,7 @@ public final class AlarmStateManager extends BroadcastReceiver {
                     instance.hashCode(), stateChangePowerOffIntent, PendingIntent.FLAG_ONE_SHOT);
 
             final AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            am.setExact(AlarmManager_Wrapper.RTC_POWEROFF_WAKEUP, instance.getAlarmTime().getTimeInMillis(),
+            am.setExact(AlarmManager.RTC_POWEROFF_WAKEUP, instance.getAlarmTime().getTimeInMillis(),
                     pendingPowerOffIntent);
         }
 
@@ -1152,6 +1150,6 @@ public final class AlarmStateManager extends BroadcastReceiver {
      * Check if it is alarm boot
      */
     public static boolean isAlarmBoot () {
-       return SystemProperties_Wrapper.getBoolean("ro.alarm_boot", false);
+       return SystemProperties.getBoolean("ro.alarm_boot", false);
     }
 }
